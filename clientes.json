@@ -1,0 +1,27 @@
+{
+  "acbfit": {
+    "nombre_completo": "ACBFIT",
+    "direccion": "Dg 31A #71 Local 02, Los Alpes, Cartagena",
+    "nit": ""
+  },
+  "pley_barranquilla": {
+    "nombre_completo": "Pley Club Barranquilla",
+    "direccion": "Cra. 46 #73-26, Nte. Centro Historico, Barranquilla",
+    "nit": ""
+  },
+  "pley_cartagena": {
+    "nombre_completo": "Pley Club Cartagena",
+    "direccion": "Tv. 48 #Diag 21 - 48 # 04. El bosque, Cartagena",
+    "nit": ""
+  },
+  "bebidas_1a": {
+    "nombre_completo": "Bebidas & Licores 1A",
+    "direccion": "Tv. 74 #31b-40, Los Alpes, Cartagena",
+    "nit": ""
+  },
+  "equilibrio_clinic": {
+    "nombre_completo": "Equilibrio Clinic",
+    "direccion": "Cll 31 #62-57 Chipre, Cartagena",
+    "nit": ""
+  }
+}

@@ -2,22 +2,22 @@
   "acbfit": {
     "nombre_completo": "ACBFIT",
     "direccion": "Dg 31A #71 Local 02, Los Alpes, Cartagena",
-    "nit": ""
+    "nit": "901725973"
   },
   "pley_barranquilla": {
     "nombre_completo": "Pley Club Barranquilla",
     "direccion": "Cra. 46 #73-26, Nte. Centro Historico, Barranquilla",
-    "nit": ""
+    "nit": "9008073835-2"
   },
   "pley_cartagena": {
     "nombre_completo": "Pley Club Cartagena",
     "direccion": "Tv. 48 #Diag 21 - 48 # 04. El bosque, Cartagena",
-    "nit": ""
+    "nit": " 9008073835"
   },
   "bebidas_1a": {
     "nombre_completo": "Bebidas & Licores 1A",
     "direccion": "Tv. 74 #31b-40, Los Alpes, Cartagena",
-    "nit": ""
+    "nit": "000000000"
   },
    "arismendy": {
     "nombre_completo": "Arismendy Andrade S.A.S",
@@ -32,6 +32,6 @@
   "equilibrio_clinic": {
     "nombre_completo": "Equilibrio Clinic",
     "direccion": "Cll 31 #62-57 Chipre, Cartagena",
-    "nit": ""
+    "nit": "9012506980"
   }
 }

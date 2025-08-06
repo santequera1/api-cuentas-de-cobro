@@ -3,3 +3,6 @@ uvicorn
 reportlab
 Pillow
 python-multipart
+gspread
+google-auth-oauthlib
+pandas

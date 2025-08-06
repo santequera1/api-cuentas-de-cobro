@@ -1,4 +1,3 @@
-
 import os
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -7,15 +6,15 @@ from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from datetime import datetime
 
-def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, servicios: list) -> str:
+def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: float, concepto: str) -> str:
     """
-    Genera una cuenta de cobro en formato PDF a partir de una lista de servicios.
+    Genera una cuenta de cobro en formato PDF.
 
     Args:
         nombre_cliente: El nombre del cliente.
-        identificacion: La identificación del cliente (NIT o C.C.).
-        servicios: Una lista de diccionarios, donde cada uno contiene:
-                   'descripcion', 'cantidad', y 'precio_unitario'.
+        identificacion: La identificación del cliente.
+        valor: El valor a cobrar.
+        concepto: El concepto de la cuenta de cobro.
 
     Returns:
         La ruta del archivo PDF generado.
@@ -52,11 +51,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, servicios:
     # --- GENERACIÓN DEL PDF ---
     numero_cuenta = datetime.now().strftime("%Y%m%d%H%M%S")
     nombre_archivo = f"cuenta_cobro_{nombre_cliente.replace(' ', '_')}_{numero_cuenta}.pdf"
-    
-    # Crear directorio si no existe
-    ruta_directorio_salida = os.path.join(script_dir, "cuentas generadas")
-    os.makedirs(ruta_directorio_salida, exist_ok=True)
-    ruta_salida = os.path.join(ruta_directorio_salida, nombre_archivo)
+    ruta_salida = os.path.join(script_dir, nombre_archivo)
 
     c = canvas.Canvas(ruta_salida, pagesize=letter)
     width, height = letter
@@ -95,10 +90,17 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, servicios:
     c.setFont("HN-Normal", 9)
     c.drawString(margen_izquierdo + 36, y, datetime.now().strftime("%d/%m/%Y"))
 
+    y -= 24
+    c.setFont("HN-Bold", 9)
+    c.drawString(margen_izquierdo, y, "Concepto:")
+    c.setFont("HN-Normal", 9)
+    c.drawString(margen_izquierdo + 63, y, concepto)
+
     # --- TABLA DE SERVICIOS ---
-    table_y_start = y - 40
+    servicios = [{'descripcion': concepto, 'cantidad': 1, 'precio_unitario': valor}]
     col_widths = [280, 60, 100, 100]
     row_height = 20
+    table_y_start = height - 330
     header_color = colors.Color(red=47/255, green=84/255, blue=150/255)
 
     c.setFillColor(header_color)
@@ -128,7 +130,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, servicios:
     c.drawString(margen_izquierdo + 5, current_y + 6, "No responsable de IVA")
     c.setFont("HN-Bold", 10)
     c.drawString(margen_izquierdo + col_widths[0] + col_widths[1] + 10, current_y + 6, "Total")
-    c.drawRightString(margen_izquierdo + sum(col_widths) - 10, current_y + 6, f"$ {total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    c.drawString(margen_izquierdo + sum(col_widths[:3]) + 10, current_y + 6, f"$ {total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
     y = current_y - 20
 
     # --- INFORMACIÓN DE PAGO ---
@@ -150,5 +152,4 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, servicios:
     c.drawString(margen_izquierdo, y, emisor_nombre)
 
     c.save()
-    print(f"Cuenta de cobro generada en: {ruta_salida}")
     return ruta_salida

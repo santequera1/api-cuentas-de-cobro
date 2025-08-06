@@ -2,39 +2,31 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
-from typing import List
 from generador import generar_cuenta_de_cobro
 
 app = FastAPI(
     title="API de Cuentas de Cobro",
-    description="Una API para generar cuentas de cobro en formato PDF con múltiples ítems.",
-    version="2.0.0"
+    description="Una API para generar cuentas de cobro en formato PDF.",
+    version="1.0.0"
 )
 
-class Servicio(BaseModel):
-    descripcion: str = Field(..., example="Servicio de diseño web")
-    cantidad: int = Field(..., gt=0, example=1)
-    precio_unitario: float = Field(..., gt=0, example=1200000.0)
-
-class DatosFactura(BaseModel):
+class DatosCliente(BaseModel):
     nombre: str = Field(..., example="Pepito Perez")
     identificacion: str = Field(..., example="123456789")
-    servicios: List[Servicio]
+    valor: float = Field(..., gt=0, example=150000.50)
+    concepto: str = Field(..., max_length=200, example="Desarrollo de landing page")
 
-@app.post("/crear-cuenta/", summary="Crear una nueva cuenta de cobro con múltiples ítems")
-async def crear_cuenta(factura: DatosFactura):
+@app.post("/crear-cuenta/", summary="Crear una nueva cuenta de cobro")
+async def crear_cuenta(cliente: DatosCliente):
     """
-    Recibe los datos de una factura en formato JSON, incluyendo una lista de servicios,
-    genera una cuenta de cobro en PDF y la devuelve para su descarga.
+    Recibe los datos de un cliente en formato JSON, genera una cuenta de cobro en formato PDF y la devuelve para su descarga.
     """
     try:
-        # Convertir la lista de objetos Pydantic a una lista de diccionarios
-        servicios_dict = [servicio.dict() for servicio in factura.servicios]
-
         ruta_archivo_generado = generar_cuenta_de_cobro(
-            nombre_cliente=factura.nombre,
-            identificacion=factura.identificacion,
-            servicios=servicios_dict
+            nombre_cliente=cliente.nombre,
+            identificacion=cliente.identificacion,
+            valor=cliente.valor,
+            concepto=cliente.concepto
         )
 
         if not os.path.exists(ruta_archivo_generado):
@@ -46,6 +38,4 @@ async def crear_cuenta(factura: DatosFactura):
             filename=os.path.basename(ruta_archivo_generado)
         )
     except Exception as e:
-        # Log del error para depuración
-        print(f"Error inesperado: {e}")
         raise HTTPException(status_code=500, detail=f"Ocurrió un error inesperado: {e}")

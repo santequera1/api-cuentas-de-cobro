@@ -22,7 +22,7 @@ def generar_propuesta(contenido: str) -> str:
     
     # --- DATOS DEL EMISOR ---
     emisor_nombre = "Dairo Traslaviña"
-    emisor_telefono = "3007189383"
+    emisor_telefono = "+57 3007189383"
     emisor_email = "Dairo@dtgrowthpartners.com"
     emisor_ciudad = "Cartagena, Colombia"
 
@@ -96,11 +96,11 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     # --- DATOS DEL EMISOR ---
     emisor_nombre = "Dairo Traslaviña"
     emisor_cedula = "1143397563"
-    emisor_telefono = "3007189383"
+    emisor_telefono = "+57 3007189383"
     emisor_email = "Dairo@dtgrowthpartners.com"
     emisor_ciudad = "Cartagena, Colombia"
     cuenta_bancolombia = "78841707710"
-    nequi = "3007189383"
+    nequi = "+57 3007189383"
 
     # --- REGISTRAR FUENTES ---
     fuentes_dir = os.path.join(script_dir, 'fuentes')
@@ -175,7 +175,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
 
     y -= 24
     c.setFont("HN-Bold", 9)
-    label_concepto = "Concepto:"
+    label_concepto = "Servicio / Proyecto:"
     c.drawString(margen_izquierdo, y, label_concepto)
     label_width = c.stringWidth(label_concepto, "HN-Bold", 9)
     c.setFont("HN-Normal", 9)
@@ -232,7 +232,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     c.drawString(margen_izquierdo, y, f"Nequi: {nequi}")
     
     y -= 36
-    c.drawString(margen_izquierdo, y, "Atentamente,")
+    c.drawString(margen_izquierdo, y, "Se solicita que el pago sea realizado a la mayor brevedad posible. Atentamente,")
     y -= 48
     c.drawString(margen_izquierdo, y, emisor_nombre)
 

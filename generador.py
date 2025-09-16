@@ -100,7 +100,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     emisor_email = "Dairo@dtgrowthpartners.com"
     emisor_ciudad = "Cartagena, Colombia"
     cuenta_bancolombia = "78841707710"
-    nequi = "+57 3007189383"
+    nequi = "3007189383"
 
     # --- REGISTRAR FUENTES ---
     fuentes_dir = os.path.join(script_dir, 'fuentes')
@@ -133,17 +133,17 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
 
     margen_izquierdo = 40
     c.setFont("HN-Normal", 22)
-    c.setFillColor(colors.HexColor("#304a7c"))
+    c.setFillColor(colors.HexColor("#005F99"))
     c.drawCentredString(width / 2.0, height - 120, f"CUENTA DE COBRO N.° {numero_cuenta}")
 
     y = height - 160
     c.setFont("HN-Normal", 9)
-    c.setFillColor(colors.HexColor("#0070c0"))
+    c.setFillColor(colors.HexColor("#005F99"))
     c.drawString(margen_izquierdo, y, emisor_telefono)
     y -= 12
     c.drawString(margen_izquierdo, y, emisor_email)
     y -= 12
-    dark_gray = colors.HexColor("#36454F")
+    dark_gray = colors.HexColor("#005F99")
     c.setFillColor(dark_gray)
     c.drawString(margen_izquierdo, y, emisor_ciudad)
 
@@ -151,12 +151,12 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     c.setFont("HN-Bold", 9)
     c.setFillColor(colors.black)
     
-    # MEJORADO: Mejor espaciado para los datos del cliente
+    # CORREGIDO: Espaciado reducido para los datos del cliente
     label_cliente = "Cliente:"
     c.drawString(margen_izquierdo, y, label_cliente)
     label_width = c.stringWidth(label_cliente, "HN-Bold", 9)
     c.setFont("HN-Normal", 9)
-    c.drawString(margen_izquierdo + label_width + 15, y, nombre_cliente)  # Aumenté el espaciado de 5 a 15
+    c.drawString(margen_izquierdo + label_width + 2, y, nombre_cliente)  # Reducido de 5 a 2
     
     y -= 15  # Aumenté el espaciado entre líneas de 12 a 15
     c.setFont("HN-Bold", 9)
@@ -164,7 +164,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     c.drawString(margen_izquierdo, y, label_id)
     label_width = c.stringWidth(label_id, "HN-Bold", 9)
     c.setFont("HN-Normal", 9)
-    c.drawString(margen_izquierdo + label_width + 15, y, identificacion)  # Aumenté el espaciado de 5 a 15
+    c.drawString(margen_izquierdo + label_width + 2, y, identificacion)  # Reducido de 5 a 2
     
     y -= 15  # Aumenté el espaciado entre líneas de 12 a 15
     c.setFont("HN-Bold", 9)
@@ -172,7 +172,7 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     c.drawString(margen_izquierdo, y, label_fecha)
     label_width = c.stringWidth(label_fecha, "HN-Bold", 9)
     c.setFont("HN-Normal", 9)
-    c.drawString(margen_izquierdo + label_width + 15, y, datetime.now().strftime("%d/%m/%Y"))  # Aumenté el espaciado de 5 a 15
+    c.drawString(margen_izquierdo + label_width + 2, y, datetime.now().strftime("%d/%m/%Y"))  # Reducido de 5 a 2
 
     y -= 30  # Aumenté el espaciado antes del concepto de 24 a 30
     c.setFont("HN-Bold", 9)
@@ -180,14 +180,15 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     c.drawString(margen_izquierdo, y, label_concepto)
     label_width = c.stringWidth(label_concepto, "HN-Bold", 9)
     c.setFont("HN-Normal", 9)
-    c.drawString(margen_izquierdo + label_width + 15, y, concepto)  # Aumenté el espaciado de 5 a 15
+    c.drawString(margen_izquierdo + label_width + 2, y, concepto)  # Reducido de 5 a 2
 
     # --- TABLA DE SERVICIOS ---
     servicios = [{'descripcion': concepto, 'cantidad': 1, 'precio_unitario': valor}]
     col_widths = [280, 60, 100, 100]
     row_height = 20
     table_y_start = height - 330
-    header_color = colors.Color(red=47/255, green=84/255, blue=150/255)
+    header_color = colors.Color(red=0/255, green=95/255, blue=153/255)
+
 
     c.setFillColor(header_color)
     c.rect(margen_izquierdo, table_y_start, sum(col_widths), row_height, fill=1, stroke=0)
@@ -230,16 +231,18 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     y -= 12
     c.drawString(margen_izquierdo, y, f"Cuenta de ahorros Bancolombia: {cuenta_bancolombia}")
     y -= 12
-    c.drawString(margen_izquierdo, y, f"Nequi: {nequi}")
+    c.drawString(margen_izquierdo, y, f"Nequi / Daviplata: {nequi}")
     
     y -= 36
-    # MEJORADO: Agregué "Notas adicionales: " antes del texto
+    # CORREGIDO: "Atentamente" en línea separada
     c.setFont("HN-Bold", 9)
     c.drawString(margen_izquierdo, y, "Notas adicionales:")
-    y -= 12
     c.setFont("HN-Normal", 9)
-    c.drawString(margen_izquierdo, y, "Se solicita que el pago sea realizado a la mayor brevedad posible. Atentamente,")
-    y -= 48
+    label_width = c.stringWidth("Notas adicionales: ", "HN-Bold", 9)
+    c.drawString(margen_izquierdo + label_width, y, "Se solicita que el pago sea realizado a la mayor brevedad posible.")
+    y -= 80  # Aumentado de 12 a 18 para bajar más "Atentamente,"
+    c.drawString(margen_izquierdo, y, "Atentamente,")
+    y -= 16  # Reducido el espacio antes de la firma de 48 a 36
     c.drawString(margen_izquierdo, y, emisor_nombre)
 
     # --- FOOTER CENTRADO ---

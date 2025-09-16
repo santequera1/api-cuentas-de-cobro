@@ -6,11 +6,3 @@ python-multipart
 gspread
 google-auth-oauthlib
 pandas
-
-
-
-
-curl -X POST "http://127.0.0.1:8000/crear-cuenta/" ^
--H "Content-Type: application/json" ^
--d "{\"nickname_cliente\": \"acbfit\", \"valor\": 150000.50, \"concepto\": \"Desarrollo de landing page\"}" ^
---output cuenta_de_cobro.pdf

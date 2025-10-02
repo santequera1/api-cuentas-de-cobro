@@ -45,7 +45,7 @@ def generar_propuesta(contenido: str) -> str:
             break
 
     # --- GENERACIÓN DEL PDF ---
-    nombre_archivo = "propuesta_safetyh.pdf"
+    nombre_archivo = "propuesta_CartagenaExperience.pdf"
     ruta_salida = os.path.join(script_dir, nombre_archivo)
 
     doc = SimpleDocTemplate(ruta_salida, pagesize=letter)
@@ -64,16 +64,30 @@ def generar_propuesta(contenido: str) -> str:
     styles.add(ParagraphStyle(name='Justify', alignment=4)) # 4 = Justify
     styles.add(ParagraphStyle(name='Bold', fontName='HN-Bold'))
 
+    styles.add(ParagraphStyle(name='MyTitle', fontName='HN-Bold', fontSize=18, alignment=1, spaceAfter=20, leading=22))
+
     story = []
     
     # Add a spacer to move the content down
     story.append(Spacer(1, 100))
 
-    for line in contenido.split('\n'):
+    contenido_split = contenido.split('\n')
+    titulo = contenido_split[0]
+    cuerpo = '\n'.join(contenido_split[1:])
+
+    story.append(Paragraph(titulo, styles['MyTitle']))
+
+    reducir_interlineado = False
+    for line in cuerpo.split('\n'):
+        if "2. Propuesta de Servicios" in line:
+            reducir_interlineado = True
         if line.startswith('**') and line.endswith('**'):
             line = f"<b>{line.strip('**')}</b>"
         story.append(Paragraph(line, styles['Justify']))
-        story.append(Spacer(1, 12))
+        if reducir_interlineado:
+            story.append(Spacer(1, 6))
+        else:
+            story.append(Spacer(1, 12))
 
     doc.build(story, onFirstPage=on_first_page, onLaterPages=on_first_page)
     return ruta_salida
@@ -199,16 +213,36 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     current_y, total = table_y_start, 0
     c.setFont("HN-Normal", 9)
     c.setFillColor(colors.black)
+    
+    styles = getSampleStyleSheet()
+    descripcion_style = ParagraphStyle(
+        'descripcion',
+        parent=styles['Normal'],
+        fontName='HN-Normal',
+        fontSize=9,
+        leading=11
+    )
+
     for servicio in servicios:
-        current_y -= row_height
+        descripcion_p = Paragraph(servicio['descripcion'], descripcion_style)
+        
+        desc_width = col_widths[0] - 10
+        w, h = descripcion_p.wrap(desc_width, table_y_start)
+        
+        dynamic_row_height = max(row_height, h + 10)
+
+        current_y -= dynamic_row_height
         importe = servicio['cantidad'] * servicio['precio_unitario']
         total += importe
         c.setStrokeColorRGB(0.8, 0.8, 0.8)
-        c.grid([margen_izquierdo, margen_izquierdo + col_widths[0], margen_izquierdo + sum(col_widths[:2]), margen_izquierdo + sum(col_widths[:3]), margen_izquierdo + sum(col_widths)], [current_y, current_y + row_height])
-        c.drawString(margen_izquierdo + 5, current_y + 6, servicio['descripcion'][:50])
-        c.drawCentredString(margen_izquierdo + col_widths[0] + col_widths[1]/2, current_y + 6, str(servicio['cantidad']))
-        c.drawRightString(margen_izquierdo + sum(col_widths[:3]) - 10, current_y + 6, f"$ {servicio['precio_unitario']:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
-        c.drawRightString(margen_izquierdo + sum(col_widths) - 10, current_y + 6, f"$ {importe:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        c.grid([margen_izquierdo, margen_izquierdo + col_widths[0], margen_izquierdo + sum(col_widths[:2]), margen_izquierdo + sum(col_widths[:3]), margen_izquierdo + sum(col_widths)], [current_y, current_y + dynamic_row_height])
+        
+        descripcion_p.drawOn(c, margen_izquierdo + 5, current_y + (dynamic_row_height - h) / 2)
+
+        text_y = current_y + (dynamic_row_height / 2) - 3
+        c.drawCentredString(margen_izquierdo + col_widths[0] + col_widths[1]/2, text_y, str(servicio['cantidad']))
+        c.drawRightString(margen_izquierdo + sum(col_widths[:3]) - 10, text_y, f"$ {servicio['precio_unitario']:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+        c.drawRightString(margen_izquierdo + sum(col_widths) - 10, text_y, f"$ {importe:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
 
     current_y -= row_height
     c.grid([margen_izquierdo, margen_izquierdo + sum(col_widths)], [current_y, current_y + row_height])
@@ -286,25 +320,6 @@ def generar_cuenta_de_cobro(nombre_cliente: str, identificacion: str, valor: flo
     return ruta_salida
 
 if __name__ == "__main__":
-    with open(r"C:\Users\sante\Desktop\gemini-cli\stiven_files\PDFS\api-cuentas-de-cobro\propuesta_safetyh.txt", "r", encoding="utf-8") as f:
+    with open(r"C:\Users\sante\Desktop\gemini-cli\stiven_files\PDFS\api-cuentas-de-cobro\propuesta.txt", "r", encoding="utf-8") as f:
         contenido_propuesta = f.read()
     generar_propuesta(contenido_propuesta)
-
-    # --- CÓDIGO PARA GENERAR CUENTA DE COBRO A TRAVÉS DE LA API ---
-    import requests
-
-    url = "https://api-cuentas-de-cobro.onrender.com/crear-cuenta/"
-    datos_cuenta = {
-        "nickname_cliente": "acbfit",
-        "valor": 150000.50,
-        "concepto": "Desarrollo de landing page"
-    }
-
-    respuesta = requests.post(url, json=datos_cuenta)
-
-    if respuesta.status_code == 200:
-        with open("cuenta_de_cobro.pdf", "wb") as f:
-            f.write(respuesta.content)
-        print("Cuenta de cobro generada y guardada como 'cuenta_de_cobro.pdf'")
-    else:
-        print(f"Error al generar la cuenta de cobro: {respuesta.text}")

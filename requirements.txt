@@ -6,3 +6,4 @@ python-multipart
 gspread
 google-auth-oauthlib
 pandas
+requests

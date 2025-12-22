@@ -1,37 +1,67 @@
 {
-  "acbfit": {
-    "nombre_completo": "ACBFIT",
-    "direccion": "Dg 31A #71 Local 02, Los Alpes, Cartagena",
-    "nit": "901725973"
-  },
-  "pley_barranquilla": {
-    "nombre_completo": "Pley Club Barranquilla",
-    "direccion": "Cra. 46 #73-26, Nte. Centro Historico, Barranquilla",
-    "nit": "9008073835-2"
-  },
-  "pley_cartagena": {
-    "nombre_completo": "Pley Club Cartagena",
-    "direccion": "Tv. 48 #Diag 21 - 48 # 04. El bosque, Cartagena",
-    "nit": " 9008073835"
-  },
   "bebidas_1a": {
     "nombre_completo": "Bebidas & Licores 1A",
     "direccion": "Tv. 74 #31b-40, Los Alpes, Cartagena",
     "nit": "000000000"
   },
-   "arismendy": {
-    "nombre_completo": "Arismendy Andrade S.A.S",
-    "direccion": "Cra 56 # 2A – 67 KM 2 Vía A Mamonal Br, Cartagena de Indias, Bolívar",
-    "nit": "806014651 -1"
-  },
-  "Sanautos": {
-    "nombre_completo": "SAN AUTOS",
-    "direccion": "BRR SAN FERNANDO SEC LOS CIRUELOS CR 83 26 18, Cartagena",
-    "nit": "806014651 -1"
+  "caribe_fest": {
+    "nombre_completo": "Caribe Fest",
+    "direccion": "Cartagena de Indias",
+    "nit": "9018834468"
   },
   "equilibrio_clinic": {
     "nombre_completo": "Equilibrio Clinic",
     "direccion": "Cll 31 #62-57 Chipre, Cartagena",
     "nit": "9012506980"
+  },
+  "experiencia_cartagena": {
+    "nombre_completo": "Experiencia Cartagena S.A.S",
+    "direccion": "Cartagena de Indias",
+    "nit": "901719279-3"
+  },
+  "gustavo_rodriguez": {
+    "nombre_completo": "Gustavo Rodriguez",
+    "direccion": "pie de la popa",
+    "nit": "200438443"
+  },
+  "importaciones_cartagena": {
+    "nombre_completo": "Importaciones Cartagena",
+    "direccion": "Cartagena de Indias",
+    "nit": "0"
+  },
+  "pley_club_barranquilla": {
+    "nombre_completo": "Pley Club Barranquilla",
+    "direccion": "Cra. 46 #73-26, Nte. Centro Historico, Barranquilla",
+    "nit": "9008073835-2"
+  },
+  "pley_club_cartagena": {
+    "nombre_completo": "Pley Club Cartagena",
+    "direccion": "Tv. 48 #Diag 21 - 48 # 04. El bosque, Cartagena",
+    "nit": " 9008073835"
+  },
+  "roberto_casanova": {
+    "nombre_completo": "Roberto Casanova",
+    "direccion": "four seasons",
+    "nit": "7984569"
+  },
+  "San_autos": {
+    "nombre_completo": "SAN AUTOS",
+    "direccion": "BRR SAN FERNANDO SEC LOS CIRUELOS CR 83 26 18, Cartagena",
+    "nit": "806014651 -1"
+  },
+  "tennis_cartagena": {
+    "nombre_completo": "Tennis Cartagena",
+    "direccion": "Cl 31E #71G-113, Los Alpes, Cartagena de Indias",
+    "nit": "0"
+  },
+  "inversiones_pandora": {
+    "nombre_completo": "HOTEL A & A SANTA ALEJANDRÍA S.A.S",
+    "direccion": "CR 77 C 48 91 BRR ESTADIO",
+    "nit": "9015169649"
+  },
+  "inversiones_pandorasas": {
+    "nombre_completo": "Inversiones Pandora SAS",
+    "direccion": "Cl 9 N 48 N Cl De La Cruz",
+    "nit": "900796740"
   }
 }
